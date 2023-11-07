@@ -3,14 +3,19 @@ import { Link, useForm } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 
 const Create = (props) => {
-    const {data, setData} = useForm({
+    const {data, setData, post} = useForm({
         amount: "",
         discrioption: "",
         expence_at: "",
-        category_id: ""
+        category_id: "",
+        user_id: props.user_id
     })
+    
+    const handleSendExpences = (e) => {
+        e.preventDefault();
+        post("/expences");
+    }
 
-    console.log(data);
 
     return (
             <Authenticated auth={props.auth} header={
@@ -21,29 +26,35 @@ const Create = (props) => {
 
                 <div className="p-12">
 
-                    <form>
+                    <form onSubmit={handleSendExpences}>
                         <div>
                             <h2>費用</h2>
                             <input type="text" placeholder="1500" onChange={(e) => setData("amount", e.target.value)}/>
+                            <span className="text-red-600">{props.errors.amount}</span>
                         </div>
                         
                         <div>
                         <h2>カテゴリー</h2>
                             <input type="text" placeholder="1" onChange={(e) => setData("category_id", e.target.value)}/>
+                            <span className="text-red-600">{props.errors.category_id}</span>
                         </div>   
 
                         <div>
                             <h2>詳細説明</h2>
                             <textarea placeholder="ごはん" onChange={(e) => setData("discription", e.target.value)}></textarea>
+                            <span className="text-red-600">{props.errors.discription}</span>
                         </div>
                         
                         <div>
                         <h2>日時</h2>
                             <input type="text" placeholder="2023-11-05" onChange={(e) => setData("expence_at", e.target.value)}/>
-                        </div>   
+                            <span className="text-red-600">{props.errors.expence_at}</span>
+                        </div>
+                        
+                         <button type="submit" className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md">send</button>
                     </form>
 
-                    <Link href="/expence">戻る</Link>
+                    <Link href="/expences">戻る</Link>
                 </div>
 
             </Authenticated>

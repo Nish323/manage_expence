@@ -25,7 +25,7 @@ const Index = (props) => {
                           Amount: {expence.amount}<br/>
                           Created At: {expence.created_at}<br/>
                           Deleted At: {expence.updated_at}<br/>
-                          Expense At: {expence.expence_at}
+                          Expense At: {expence.expence_at}<br/>
                         </p>
                     </div>
                 )) }

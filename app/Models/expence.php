@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class expence extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        "user_id",
+        "category_id",
+        "discription",
+        "amount",
+        "created_at",
+        "updated_at",
+        "expence_at"
+    ];
 }
