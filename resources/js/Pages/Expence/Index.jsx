@@ -4,7 +4,9 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 
 const Index = (props) => {
     const { expences } = props; 
-    console.log(props);
+    const user_id = props.auth.user.id;
+    
+    const userExpences = expences.filter(expence => expence.user_id == user_id);
     
     return (
         <Authenticated auth={props.auth} header={
@@ -15,8 +17,8 @@ const Index = (props) => {
             
             <div className="p-12">
                 <h1>Expence</h1>
-                <Link href="/expences/create">Create</Link>
-                { expences.map((expence) => (
+                
+                { userExpences.map((expence) => (
                     <div key={expence.id}>
                         <p>
                           User ID: {expence.user_id}<br/>
@@ -29,7 +31,11 @@ const Index = (props) => {
                         </p>
                     </div>
                 )) }
+                <br/>
+                <Link href="/home/create">Create</Link><br/>
+                <Link href="/home">Home</Link>
             </div>
+            
             
         </Authenticated>
         );

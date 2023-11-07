@@ -13,7 +13,7 @@ const Create = (props) => {
     
     const handleSendExpences = (e) => {
         e.preventDefault();
-        post("/expences");
+        post("/home/expences");
     }
 
 
@@ -53,8 +53,10 @@ const Create = (props) => {
                         
                          <button type="submit" className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md">send</button>
                     </form>
+                    
+                    <Link href="/home/expences">Check</Link><br/>
 
-                    <Link href="/expences">戻る</Link>
+                    <Link href="/home">Home</Link>
                 </div>
 
             </Authenticated>
