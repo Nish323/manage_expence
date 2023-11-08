@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('weight', 2, 1);
-            $table->string('discription');
+            $table->string('description');
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@ const Index = (props) => {
             <div className="p-12">
                 <h1>Home</h1>
                 <Link href="/home/create">Create</Link><br/>
-                <Link href="/home/expences">Check</Link>
+                <Link href="/home/expenses">Check</Link>
             </div>
             
         </Authenticated>

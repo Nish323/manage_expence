@@ -19,19 +19,19 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             'name' => '自己投資',
             'weight' => '0.5',
-            'discription' => '自分を成長させるために使った支出',
+            'description' => '自分を成長させるために使った支出',
         ]);
         
         DB::table('categories')->insert([
             'name' => '生活必需品',
             'weight' => '1.0',
-            'discription' => '生活に必要なものに使った支出',
+            'description' => '生活に必要なものに使った支出',
         ]);
         
         DB::table('categories')->insert([
             'name' => '娯楽',
             'weight' => '1.5',
-            'discription' => '娯楽のために使った支出',
+            'description' => '娯楽のために使った支出',
         ]);
     }
 }

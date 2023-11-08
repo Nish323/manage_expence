@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExpenceRequest extends FormRequest
+class ExpenseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,9 @@ class ExpenceRequest extends FormRequest
     {
         return [
             'category_id' => 'required|integer|between:1,3',
-            'discription' => 'required|string|max:50',
+            'description' => 'required|string|max:50',
             'amount' => 'required|integer',
-            'expence_at' => 'required|date_format:Y-m-d'
+            'expense_at' => 'required|date_format:Y-m-d'
         ];
     }
 }

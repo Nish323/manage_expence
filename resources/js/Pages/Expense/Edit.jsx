@@ -3,18 +3,18 @@ import { Link, useForm } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 
 const Edit = (props) => {
-    const {expence} = props;
+    const {expense} = props;
     const {data, setData, put} = useForm({
-        amount: expence.amount,
-        discription: expence.discription,
-        expence_at: expence.expence_at,
-        category_id: expence.category_id,
+        amount: expense.amount,
+        description: expense.description,
+        expense_at: expense.expense_at,
+        category_id: expense.category_id,
         user_id: props.user_id
     })
 
-    const handleSendExpences = (e) => {
+    const handleSendExpenses = (e) => {
         e.preventDefault();
-        put(`/home/expences/${expence.id}`);
+        put(`/home/expenses/${expense.id}`);
     }
 
     return (
@@ -26,7 +26,7 @@ const Edit = (props) => {
 
             <div className="p-12">
 
-                <form onSubmit={handleSendExpences}>
+                <form onSubmit={handleSendExpenses}>
                     <div>
                         <h2>費用</h2>
                         <input type="text" placeholder="1500" value={data.amount} onChange={(e) => setData("amount", e.target.value)}/>
@@ -40,20 +40,20 @@ const Edit = (props) => {
                     </div>   
                     <div>
                         <h2>詳細説明</h2>
-                        <textarea placeholder="おやつ" value={data.discription} onChange={(e) => setData("discription", e.target.value)}></textarea>
-                        <span className="text-red-600">{props.errors.discription}</span>
+                        <textarea placeholder="おやつ" value={data.description} onChange={(e) => setData("description", e.target.value)}></textarea>
+                        <span className="text-red-600">{props.errors.description}</span>
                     </div>
                     
                     <div>
                     <h2>日時</h2>
-                        <input type="text" placeholder="2023-11-05" value={data.expence_at} onChange={(e) => setData("expence_at", e.target.value)}/>
-                        <span className="text-red-600">{props.errors.expence_at}</span>
+                        <input type="text" placeholder="2023-11-05" value={data.expense_at} onChange={(e) => setData("expense_at", e.target.value)}/>
+                        <span className="text-red-600">{props.errors.expense_at}</span>
                     </div>
                     
                      <button type="submit" className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md">edit</button>
                 </form>
                 
-                <Link href="/home/expences">Check</Link><br/>
+                <Link href="/home/expenses">Check</Link><br/>
 
                 <Link href="/home">Home</Link>
             </div>

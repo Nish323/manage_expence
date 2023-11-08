@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
                 UserSeeder::class,
                 CategorySeeder::class,
-                ExpenceSeeder::class,
+                ExpenseSeeder::class,
                 MonthSeeder::class,
                 YearSeeder::class,
                 CMonthSeeder::class,

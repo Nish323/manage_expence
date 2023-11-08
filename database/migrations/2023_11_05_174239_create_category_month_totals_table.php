@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->year('year');
             $table->integer('month');
-            $table->integer('expence_total');
+            $table->integer('expense_total');
             $table->integer('weight_total');
             $table->timestamps();
         });
