@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('expences', function (Blueprint $table) {
-            $table->id();
-            $table->string('discription', 100);
-            $table->integer('amount');
-            $table->date('expence_at');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('expenses', function (Blueprint $table) {
+            $table->foreignID('category_id')->constrained("categories");
+            $table->foreignID('user_id')->constrained("users");
         });
     }
 
@@ -30,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expences');
+        Schema::table('expenses', function (Blueprint $table) {
+            //
+        });
     }
 };

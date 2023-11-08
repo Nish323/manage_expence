@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('year_totals', function (Blueprint $table) {
             $table->id();
             $table->year('year');
-            $table->integer('expence_total');
+            $table->integer('expense_total');
             $table->integer('weight_total');
             $table->timestamps();
         });

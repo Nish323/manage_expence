@@ -5,15 +5,15 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 const Create = (props) => {
     const {data, setData, post} = useForm({
         amount: "",
-        discrioption: "",
-        expence_at: "",
+        descrioption: "",
+        expense_at: "",
         category_id: "",
         user_id: props.user_id
     })
     
-    const handleSendExpences = (e) => {
+    const handleSendExpenses = (e) => {
         e.preventDefault();
-        post("/home/expences");
+        post("/home/expenses");
     }
 
 
@@ -26,7 +26,7 @@ const Create = (props) => {
 
                 <div className="p-12">
 
-                    <form onSubmit={handleSendExpences}>
+                    <form onSubmit={handleSendExpenses}>
                         <div>
                             <h2>費用</h2>
                             <input type="text" placeholder="1500" onChange={(e) => setData("amount", e.target.value)}/>
@@ -41,20 +41,20 @@ const Create = (props) => {
 
                         <div>
                             <h2>詳細説明</h2>
-                            <textarea placeholder="ごはん" onChange={(e) => setData("discription", e.target.value)}></textarea>
-                            <span className="text-red-600">{props.errors.discription}</span>
+                            <textarea placeholder="ごはん" onChange={(e) => setData("description", e.target.value)}></textarea>
+                            <span className="text-red-600">{props.errors.description}</span>
                         </div>
                         
                         <div>
                         <h2>日時</h2>
-                            <input type="text" placeholder="2023-11-05" onChange={(e) => setData("expence_at", e.target.value)}/>
-                            <span className="text-red-600">{props.errors.expence_at}</span>
+                            <input type="text" placeholder="2023-11-05" onChange={(e) => setData("expense_at", e.target.value)}/>
+                            <span className="text-red-600">{props.errors.expense_at}</span>
                         </div>
                         
                          <button type="submit" className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md">send</button>
                     </form>
                     
-                    <Link href="/home/expences">Check</Link><br/>
+                    <Link href="/home/expenses">Check</Link><br/>
 
                     <Link href="/home">Home</Link>
                 </div>

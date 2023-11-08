@@ -22,7 +22,7 @@ class CMonthSeeder extends Seeder
             'category_id' => '1',
             'year' => '2023',
             'month' => '11',
-            'expence_total' => '1500',
+            'expense_total' => '1500',
             'weight_total' => '750',
             'created_at' => new DateTime(),
             'updated_at' => new DateTime(),
