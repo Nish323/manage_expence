@@ -28,7 +28,10 @@ const Index = (props) => {
                           Created At: {expence.created_at}<br/>
                           Deleted At: {expence.updated_at}<br/>
                           Expense At: {expence.expence_at}<br/>
+                          Expence ID: {expence.id}
                         </p>
+                        <Link href={`/home/expences/${expence.id}`}>Edit</Link><br/>
+
                     </div>
                 )) }
                 <br/>

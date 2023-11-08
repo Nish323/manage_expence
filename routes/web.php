@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get("/home/expences", [ExpenceController::class, "index"]);
     Route::get("/home/create", [ExpenceController::class, "create"]);
     Route::post("/home/expences", [ExpenceController::class, "store"]);
+    Route::get('/home/expences/{expence}', [ExpenceController::class, "edit"]);
+    Route::put('/home/expences/{expence}', [ExpenceController::class, "update"]);
 });
 
 require __DIR__.'/auth.php';
