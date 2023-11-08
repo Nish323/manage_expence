@@ -48,7 +48,7 @@ class ExpenseController extends Controller
     
     public function delete(Expense $expense)
     {
-        $expense->delete;
+        $expense->delete();
         return redirect("/home/expenses");
     }
 }
