@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useForm } from '@inertiajs/react';
+import { Link, useForm, router } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 
 const Index = (props) => {
@@ -7,6 +7,12 @@ const Index = (props) => {
     const user_id = props.auth.user.id;
     
     const userExpences = expences.filter(expence => expence.user_id == user_id);
+    
+    const handleDeleteExpence = (id) => {
+        router.delete("/home/expences", {
+            onBefore: () => confirm("本当に削除しますか？"),
+        })
+    }
     
     return (
         <Authenticated auth={props.auth} header={
@@ -31,6 +37,7 @@ const Index = (props) => {
                           Expence ID: {expence.id}
                         </p>
                         <Link href={`/home/expences/${expence.id}`}>Edit</Link><br/>
+                        <button className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md" onClick={() => handleDeleteExpence(expence.id)}>delete</button>
 
                     </div>
                 )) }

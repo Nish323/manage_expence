@@ -39,10 +39,16 @@ class ExpenceController extends Controller
     }
     
     public function update(ExpenceRequest $request, Expence $expence)
-{
+    {
         $input = $request->all();
         $input += ['user_id' => $request->user()->id];
         $expence->fill($input)->save();
         return redirect("/home/expences/" . $expence->id);
+    }
+    
+    public function delete(Expence $expence)
+    {
+    $expence->delete();
+    return redirect("/home/expences");
     }
 }
