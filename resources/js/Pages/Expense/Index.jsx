@@ -49,6 +49,7 @@ const Index = (props) => {
             
         </Authenticated>
         );
+        
 }
 
 export default Index;

@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import react from '@vitejs/plugin-react';
+import reactRefresh from '@vitejs/plugin-react-refresh';
 
 export default defineConfig({
-    plugins: [
-        laravel({
-            input: 'resources/js/app.jsx',
-            refresh: true,
-        }),
-        react(),
-    ],
+  plugins: [reactRefresh()],
+  resolve: {
+    alias: {
+      '@emotion/react': require.resolve('@emotion/react'),
+      '@emotion/styled': require.resolve('@emotion/styled'),
+    },
+  },
 });
+
