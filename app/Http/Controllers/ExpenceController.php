@@ -32,4 +32,17 @@ class ExpenceController extends Controller
         $expence->fill($input)->save();
         return redirect("/home/expences");
     }
+    
+    public function edit(Expence $expence)
+    {
+        return Inertia::render("Expence/Edit", ["expence" => $expence]);
+    }
+    
+    public function update(ExpenceRequest $request, Expence $expence)
+{
+        $input = $request->all();
+        $input += ['user_id' => $request->user()->id];
+        $expence->fill($input)->save();
+        return redirect("/home/expences/" . $expence->id);
+    }
 }
