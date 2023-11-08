@@ -9,7 +9,7 @@ const Index = (props) => {
     const userExpences = expences.filter(expence => expence.user_id == user_id);
     
     const handleDeleteExpence = (id) => {
-        router.delete("/home/expences", {
+        router.delete(`/home/expences/${id}`, {
             onBefore: () => confirm("本当に削除しますか？"),
         })
     }
@@ -44,6 +44,7 @@ const Index = (props) => {
                 <br/>
                 <Link href="/home/create">Create</Link><br/>
                 <Link href="/home">Home</Link>
+                <Button>B</Button>
             </div>
             
             

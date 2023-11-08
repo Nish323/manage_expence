@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post("/home/expences", [ExpenceController::class, "store"]);
     Route::get('/home/expences/{expence}', [ExpenceController::class, "edit"]);
     Route::put('/home/expences/{expence}', [ExpenceController::class, "update"]);
-    Route::delete("/home/expences", [ExpenceController::class, "delete"]);
+    Route::delete("/home/expences/{expence}", [ExpenceController::class, "delete"]);
 });
 
 require __DIR__.'/auth.php';

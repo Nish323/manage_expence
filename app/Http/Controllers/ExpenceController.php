@@ -48,7 +48,7 @@ class ExpenceController extends Controller
     
     public function delete(Expence $expence)
     {
-    $expence->delete();
-    return redirect("/home/expences");
+        $expence->delete();
+        return redirect("/home/expences");
     }
 }
