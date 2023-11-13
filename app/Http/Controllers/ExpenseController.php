@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\expense;
+use App\Models\month_total;
 use App\Http\Requests\ExpenseRequest;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ExpenseController extends Controller
 {
@@ -40,10 +42,14 @@ class ExpenseController extends Controller
     
     public function update(ExpenseRequest $request, Expense $expense)
     {
+        //支出の登録
         $input = $request->all();
         $input += ['user_id' => $request->user()->id];
         $expense->fill($input)->save();
         return redirect("/home/expenses/" . $expense->id);
+        
+        //month_totalを取得または作成
+        
     }
     
     public function delete(Expense $expense)

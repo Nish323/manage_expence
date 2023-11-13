@@ -1,6 +1,7 @@
-import React from "react";
+import * as React from "react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Link, router } from '@inertiajs/react'
+import { Link, router } from '@inertiajs/react';
+import { Button } from '@mui/material';
 
 const Index = (props) => {
     const { expenses } = props; 
@@ -37,7 +38,7 @@ const Index = (props) => {
                           expense ID: {expense.id}
                         </p>
                         <Link href={`/home/expenses/${expense.id}`}>Edit</Link><br/>
-                        <button className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md" onClick={() => handleDeleteExpense(expense.id)}>delete</button>
+                        <Button variant="contained" onClick={() => handleDeleteExpense(expense.id)}>delete</Button>
 
                     </div>
                 )) }
