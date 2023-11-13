@@ -18,4 +18,8 @@ class expense extends Model
         "updated_at",
         "expense_at"
     ];
+    
+    public function category(){
+        return $this->belongsTo(category::class);
+    }
 }

@@ -3,13 +3,15 @@ import { Link, useForm } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 
 const Create = (props) => {
+    const {categories} = props;
     const {data, setData, post} = useForm({
         amount: "",
         descrioption: "",
         expense_at: "",
-        category_id: "",
+        category_id: categories[0].id,
         user_id: props.user_id
     })
+    
     
     const handleSendExpenses = (e) => {
         e.preventDefault();
@@ -35,8 +37,11 @@ const Create = (props) => {
                         
                         <div>
                         <h2>カテゴリー</h2>
-                            <input type="text" placeholder="1" onChange={(e) => setData("category_id", e.target.value)}/>
-                            <span className="text-red-600">{props.errors.category_id}</span>
+                            <select onChange={e => setData("category_id", e.target.value)}>
+                            {categories.map((category) => (
+                                <option value={category.id}>{category.name}</option>
+                            ))}
+                            </select>
                         </div>   
 
                         <div>
