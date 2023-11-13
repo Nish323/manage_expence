@@ -47,7 +47,7 @@ const Create = (props) => {
                         
                         <div>
                         <h2>日時</h2>
-                            <input type="text" placeholder="2023-11-05" onChange={(e) => setData("expense_at", e.target.value)}/>
+                            <input type="date" onChange={(e) => setData("expense_at", e.target.value)}/>
                             <span className="text-red-600">{props.errors.expense_at}</span>
                         </div>
                         
