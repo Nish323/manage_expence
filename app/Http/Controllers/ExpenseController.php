@@ -40,6 +40,7 @@ class ExpenseController extends Controller
         $Year = $expenseDate->startOfMonth()->format('y');
         $userId = $request->user()->id;
         $categoryId = $request->category_id;
+        $Amount = $request->amount;
         
         // month_totalの取得または作成
         $monthTotal = month_total::firstOrNew([
@@ -49,14 +50,14 @@ class ExpenseController extends Controller
         ]);
     
         // カラムに金額を加算
-        $monthTotal->expense_total += $request->amount;
+        $monthTotal->expense_total += $Amount;
         
         //カテゴリーテーブルから対応したidのweightを取得
         $category = Category::find($categoryId);
         $weight = $category->weight;
 
         // カラムに重さを加算
-        $monthTotal->weight_total += floor($weight * $request->amount);
+        $monthTotal->weight_total += floor($weight * $Amount);
     
         // データベースに保存
         $monthTotal->save();
@@ -68,7 +69,7 @@ class ExpenseController extends Controller
         ]);
         
         $yearTotal->expense_total += $request->amount;
-        $yearTotal->weight_total += floor($weight * $request->amount);
+        $yearTotal->weight_total += floor($weight * $Amount);
         
         $yearTotal->save();
         
@@ -80,8 +81,8 @@ class ExpenseController extends Controller
             'month' => $Month,
         ]);
         
-        $CmonthTotal->expense_total += $request->amount;
-        $CmonthTotal->weight_total += floor($weight * $request->amount);
+        $CmonthTotal->expense_total += $Amount;
+        $CmonthTotal->weight_total += floor($weight * $Amount);
         $CmonthTotal->category_id = $categoryId;
         
         $CmonthTotal->save();
@@ -94,8 +95,8 @@ class ExpenseController extends Controller
             'year' => $Year,
         ]);
         
-        $CyearTotal->expense_total += $request->amount;
-        $CyearTotal->weight_total += floor($weight * $request->amount);
+        $CyearTotal->expense_total += $Amount;
+        $CyearTotal->weight_total += floor($weight * $Amount);
         $CyearTotal->category_id = $categoryId;
         
         $CyearTotal->save();
@@ -103,9 +104,9 @@ class ExpenseController extends Controller
         // $expenseモデルにデータを代入して保存
         $expense->user_id = $userId;
         $expense->expense_at = $request->expense_at;
-        $expense->amount = $request->amount;
+        $expense->amount = $Amount;
         $expense->description = $request->description;
-        $expense->category_id = $request->category_id;
+        $expense->category_id = $categoryId;
         
         $expense->save();
     
@@ -128,7 +129,76 @@ class ExpenseController extends Controller
     
     public function delete(Expense $expense)
     {
+        // ユーザー入力から月を取得
+        $expenseDate = Carbon::parse($expense->expense_at);
+        $Month = $expenseDate->startOfMonth()->format('m');
+        $Year = $expenseDate->startOfMonth()->format('Y');
+        $userId = Auth::id();
+        $categoryId = $expense->category_id;
+        $Amount = $expense->amount;
+    
+        // エクスペンスを削除
         $expense->delete();
+    
+        // month_totalの取得または作成
+        $monthTotal = month_total::firstOrNew([
+            'user_id' => $userId,
+            'year' => $Year,
+            'month' => $Month,
+        ]);
+    
+        // カラムに金額を加算
+        $monthTotal->expense_total -= $Amount;
+    
+        //カテゴリーテーブルから対応したidのweightを取得
+        $category = Category::find($categoryId);
+        $weight = $category->weight;
+    
+        // カラムに重さを加算
+        $monthTotal->weight_total -= floor($weight * $Amount);
+    
+        // データベースに保存
+        $monthTotal->save();
+    
+        //year_totalの取得または作成
+        $yearTotal = year_total::firstOrNew([
+            'user_id' => $userId,
+            'year' => $Year,
+        ]);
+    
+        $yearTotal->expense_total -= $Amount;
+        $yearTotal->weight_total -= floor($weight * $Amount);
+    
+        $yearTotal->save();
+    
+        //category_month_totalの取得または作成
+        $CmonthTotal = category_month_total::firstOrNew([
+            'user_id' => $userId,
+            'category_id' => $categoryId,
+            'year' => $Year,
+            'month' => $Month,
+        ]);
+    
+        $CmonthTotal->expense_total -= $Amount;
+        $CmonthTotal->weight_total -= floor($weight * $Amount);
+        $CmonthTotal->category_id = $categoryId;
+    
+        $CmonthTotal->save();
+    
+        //category_year_totalの取得または作成
+        $CyearTotal = category_year_total::firstOrNew([
+            'user_id' => $userId,
+            'category_id' => $categoryId,
+            'year' => $Year,
+        ]);
+    
+        $CyearTotal->expense_total -= $Amount;
+        $CyearTotal->weight_total -= floor($weight * $Amount);
+        $CyearTotal->category_id = $categoryId;
+    
+        $CyearTotal->save();
+    
         return redirect("/home/expenses");
     }
 }
+
