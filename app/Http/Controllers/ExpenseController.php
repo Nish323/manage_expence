@@ -18,9 +18,19 @@ class ExpenseController extends Controller
 {
     public function index(Expense $expense)
     {
-        return Inertia::render("Expense/Index", ["expenses" => $expense->get()]);
-    }
+        $expenses = $expense->get();
     
+        // MonthTotalモデルから月ごとの合計値を取得
+        $CmonthTotals = category_month_total::get(); // または適切なクエリを使用して取得
+        $categories = category::get();
+        
+        return Inertia::render("Expense/Index", [
+            "expenses" => $expenses,
+            "CmonthTotals" => $CmonthTotals,
+            "categories" => $categories,
+        ]);
+    }
+        
     public function create(Category $category)
     {
         return Inertia::render("Expense/Create", ["categories" => $category->get()]);
