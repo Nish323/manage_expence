@@ -1,6 +1,7 @@
-import React from "react";
+import * as React from "react";
 import { Link, useForm } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { Select, FormControl, InputLabel, Box, MenuItem } from '@mui/material';
 
 const Create = (props) => {
     const {categories} = props;
@@ -36,12 +37,23 @@ const Create = (props) => {
                         </div>
                         
                         <div>
-                        <h2>カテゴリー</h2>
-                            <select onChange={e => setData("category_id", e.target.value)}>
+                        <Box sx={{ minWidth: 120 }}>
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                            <Select
+                              value={data.category_id}
+                              label="Category"
+                              onChange={(e) => setData("category_id", e.target.value)}
+                            >
                             {categories.map((category) => (
-                                <option value={category.id}>{category.name}</option>
+                                <MenuItem value={category.id}>
+                                  {category.name}
+                                </MenuItem>
                             ))}
-                            </select>
+                            </Select>
+                          </FormControl>
+                        </Box>
+                        
                         </div>   
 
                         <div>
