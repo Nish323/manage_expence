@@ -38,8 +38,13 @@ class ExpenseController extends Controller
     
     public function home()
     {
+        $userId = Auth::id();
         
-        return Inertia::render("Expense/Home");
+        $expenses = expense::where('user_id', $userId)->get();
+        
+        return Inertia::render("Expense/Home", [
+            'expenses' => $expenses,
+        ]);
     }
     
     public function store(ExpenseRequest $request, Expense $expense)
