@@ -8,13 +8,13 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 const Index = (props) => {
-    const { expenses } = props;
+    const { expenses, categories } = props; // categoriesも受け取る
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedExpense, setSelectedExpense] = React.useState(null);
 
     const expenseEvents = expenses.map((expense) => ({
         id: expense.id,
-        title: `$${expense.amount}`,
+        title: `￥${expense.amount}`,
         category_id: expense.category_id,
         description: expense.description,
         date: expense.expense_at,
@@ -22,23 +22,17 @@ const Index = (props) => {
 
     const handleEventClick = (event) => {
         // クリックしたイベントのid
-        const eventId = parseInt(event.event.id, 10); // 文字列から数値への変換
-    
-        console.log('eventId:', eventId); // デバッグ情報をコンソールに出力
-    
+        const eventId = parseInt(event.event.id, 10);
+
         // イベントidと一致するexpensesのデータを取得
-        const clickedExpense = expenses.find((expense) => {
-            console.log('expense.id:', expense.id); // デバッグ情報をコンソールに出力
-            return expense.id === eventId;
-        });
-    
-        console.log('clickedExpense:', clickedExpense); // デバッグ情報をコンソールに出力
-    
-        setSelectedExpense(clickedExpense);
+        const clickedExpense = expenses.find((expense) => expense.id === eventId);
+
+        // カテゴリーidと一致するcategoriesのデータを取得
+        const category = categories.find((category) => category.id === clickedExpense.category_id);
+
+        setSelectedExpense({ ...clickedExpense, category }); // カテゴリー情報もselectedExpenseに含める
         setAnchorEl(event.el);
     };
-
-
 
     const handleClosePopover = () => {
         setAnchorEl(null);
@@ -78,10 +72,9 @@ const Index = (props) => {
                 >
                     {selectedExpense && (
                         <div>
-                            <Typography sx={{ p: 2 }}>金額: {`$${selectedExpense.amount}`}</Typography>
-                            <Typography sx={{ p: 2 }}>カテゴリー: {selectedExpense.category_id}</Typography>
+                            <Typography sx={{ p: 2 }}>金額: {`￥${selectedExpense.amount}`}</Typography>
+                            <Typography sx={{ p: 2 }}>カテゴリー: {selectedExpense.category.name}</Typography>
                             <Typography sx={{ p: 2 }}>説明: {selectedExpense.description}</Typography>
-                            <Typography sx={{ p: 2 }}>日付: {selectedExpense.expense_at}</Typography>
                         </div>
                     )}
                 </Popover>
@@ -91,4 +84,5 @@ const Index = (props) => {
 }
 
 export default Index;
+
 
