@@ -11,9 +11,17 @@ const Index = (props) => {
   const { expenses, CmonthTotals, categories } = props;
   const user_id = props.auth.user.id;
 
+  const currentMonth = new Date().getMonth() + 1;
+
+  const [selectedMonth, setSelectedMonth] = React.useState(currentMonth);
+
   const userExpenses = expenses.filter(expense => expense.user_id == user_id);
 
-  const useCmonthTotals = CmonthTotals.filter(CmonthTotal => CmonthTotal.month == 11);
+  // 月ごとにフィルタリングする部分を変更
+  const useCmonthTotals = CmonthTotals.filter(CmonthTotal => CmonthTotal.month === selectedMonth);
+  const sortedUserExpenses = userExpenses
+    .filter(expense => new Date(expense.expense_at).getMonth() + 1 === selectedMonth)
+    .sort((a, b) => new Date(a.expense_at) - new Date(b.expense_at));
 
   const handleDeleteExpense = (id) => {
     router.delete(`/home/expenses/${id}`, {
@@ -22,16 +30,19 @@ const Index = (props) => {
   };
 
   const getCategoryNameById = (categoryId, categories) => {
+    if (!categories) {
+      return '';
+    }
     const category = categories.find(cat => cat.id === categoryId);
     return category ? category.name : '';
   };
 
   const ExpenseData = {
-    labels: useCmonthTotals.map(entry => getCategoryNameById(entry.category_id, categories)), // カテゴリーごとのラベル
+    labels: useCmonthTotals.map(entry => getCategoryNameById(entry.category_id, categories)),
     datasets: [
       {
         label: '支出',
-        data: useCmonthTotals.map(entry => entry.expense_total), // 合計金額
+        data: useCmonthTotals.map(entry => entry.expense_total),
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)',
           'rgba(54, 162, 235, 0.6)',
@@ -43,11 +54,11 @@ const Index = (props) => {
   };
 
   const WeightData = {
-    labels: useCmonthTotals.map(entry => getCategoryNameById(entry.category_id, categories)), // カテゴリーごとのラベル
+    labels: useCmonthTotals.map(entry => getCategoryNameById(entry.category_id, categories)),
     datasets: [
       {
         label: '支出',
-        data: useCmonthTotals.map(entry => entry.weight_total), // 合計金額
+        data: useCmonthTotals.map(entry => entry.weight_total),
         backgroundColor: [
           'rgba(255, 99, 132, 0.6)',
           'rgba(54, 162, 235, 0.6)',
@@ -63,7 +74,15 @@ const Index = (props) => {
     maintainAspectRatio: false,
   };
 
-  return (
+  const incrementMonth = () => {
+    setSelectedMonth(prevMonth => prevMonth + 1);
+  };
+
+  const decrementMonth = () => {
+    setSelectedMonth(prevMonth => prevMonth - 1);
+  };
+
+ return (
     <Authenticated auth={props.auth} header={
       <h2 className="font-semibold text-xl text-gray-800 leading-tight">
         Index
@@ -72,6 +91,12 @@ const Index = (props) => {
 
       <div className="p-12">
         <h1>Expense</h1>
+
+        <div>
+          <Button onClick={decrementMonth}>{'<'}</Button>
+          <span> {selectedMonth} 月 </span>
+          <Button onClick={incrementMonth}>{'>'}</Button>
+        </div>
 
         <div style={{ maxWidth: "300px", margin: "20px auto" }}>
           <Pie data={ExpenseData} options={chartOptions} components={{ Arc: { element: ArcElement } }} />
@@ -84,38 +109,27 @@ const Index = (props) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>User ID</TableCell>
-              <TableCell>Category ID</TableCell>
+              <TableCell>Expense At</TableCell>
+              <TableCell>Category</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Amount</TableCell>
-              <TableCell>Created At</TableCell>
-              <TableCell>Updated At</TableCell>
-              <TableCell>Expense At</TableCell>
-              <TableCell>Expense ID</TableCell>
               <TableCell>Edit</TableCell>
               <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {userExpenses.map((expense) => (
+            {sortedUserExpenses.map((expense) => (
               <TableRow key={expense.id}>
-                <TableCell>{expense.user_id}</TableCell>
-                <TableCell>{expense.category_id}</TableCell>
+                <TableCell>{expense.expense_at}</TableCell>
+                <TableCell>{getCategoryNameById(expense.category_id, categories)}</TableCell>
                 <TableCell>{expense.description}</TableCell>
                 <TableCell>{expense.amount}</TableCell>
-                <TableCell>{expense.created_at}</TableCell>
-                <TableCell>{expense.updated_at}</TableCell>
-                <TableCell>{expense.expense_at}</TableCell>
-                <TableCell>{expense.id}</TableCell>
                 <TableCell><Button><Link href={`/home/expenses/${expense.id}`}>Edit</Link></Button></TableCell>
                 <TableCell><Button variant="contained" onClick={() => handleDeleteExpense(expense.id)}>Delete</Button></TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-
-        <Link href="/home/create">Create</Link><br />
-        <Link href="/home">Home</Link>
       </div>
 
     </Authenticated>
