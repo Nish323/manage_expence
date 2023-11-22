@@ -11,6 +11,7 @@ use App\Models\category_month_total;
 use App\Models\category_year_total;
 use App\Models\category;
 use App\Http\Requests\ExpenseRequest;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -25,7 +26,7 @@ class ExpenseController extends Controller
     
         // MonthTotalモデルから月ごとの合計値を取得
         $CmonthTotals = category_month_total::where('user_id', $userId)->get();
-        $categories = category::get();
+        $categories = category::where('user_id', $userId)->get();
         
         return Inertia::render("Expense/Index", [
             "expenses" => $expenses,
@@ -36,7 +37,9 @@ class ExpenseController extends Controller
         
     public function create(Category $category)
     {
-        return Inertia::render("Expense/Create", ["categories" => $category->get()]);
+        $userId = Auth::id();
+        $category = category::where('user_id', $userId)->get();
+        return Inertia::render("Expense/Create", ["categories" => $category]);
     }
     
     public function home()
@@ -44,7 +47,7 @@ class ExpenseController extends Controller
         $userId = Auth::id();
         
         $expenses = expense::where('user_id', $userId)->get();
-        $category = category::get();
+        $category = category::where('user_id', $userId)->get();
         
         
         return Inertia::render("Expense/Home", [
@@ -137,7 +140,8 @@ class ExpenseController extends Controller
     
     public function edit(Expense $expense)
     {
-        $categories = category::get();
+        $userId = Auth::id();
+        $categories = category::where('user_id', $userId)->get();
         return Inertia::render("Expense/Edit", [
             "expense" => $expense,
             "categories" => $categories
@@ -291,7 +295,7 @@ class ExpenseController extends Controller
         
         $expense->save();
     
-        return redirect("/home/expenses/" . $expense->id);
+        return redirect("/home/expenses/");
     }
     
     public function delete(Expense $expense)
@@ -367,5 +371,34 @@ class ExpenseController extends Controller
     
         return redirect("/home/expenses");
     }
+    
+    public function category()
+    {
+        $userId = Auth::id();
+        
+        $category = category::where('user_id', $userId)->get();
+        return Inertia::render("Expense/Category", ["categories" => $category]);
+    }
+    
+    public function cedit(Category $category)
+    {
+        return Inertia::render("Expense/Cedit", [
+            "categories" => $category
+            ]);
+    }
+        
+    public function cupdate(CategoryRequest $request, Category $category)
+    {
+        $input = $request->all();
+        $category->fill($input)->save();
+        return redirect("/home/category/");
+    }
+    
+    public function cdelete(Category $category){
+        $category->delete();
+        return redirect("/home/category");
+    }
+    
+    
 }
 
