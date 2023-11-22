@@ -42,9 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/home/expenses/{expense}', [ExpenseController::class, "update"]);
     Route::delete('/home/expenses/{expense}', [ExpenseController::class, "delete"]);
     Route::get('/home/category', [ExpenseController::class, "category"]);
+    Route::get("/home/category/create", [ExpenseController::class, "categorycreate"]);
     Route::get('/home/category/{category}', [ExpenseController::class, "cedit"]);
     Route::put('/home/category/{category}', [ExpenseController::class, "cupdate"]);
     Route::delete('/home/category/{category}', [ExpenseController::class, "cdelete"]);
+    Route::post("/home/category", [ExpenseController::class, "cstore"]);
 });
 
 require __DIR__.'/auth.php';
