@@ -399,6 +399,20 @@ class ExpenseController extends Controller
         return redirect("/home/category");
     }
     
+    public function categorycreate()
+    {
+        return Inertia::render("Expense/Ccreate");
+    }
+    
+    public function cstore(CategoryRequest $request, Category $category)
+    {
+        $userId = Auth::id();
+        $input = $request->all();
+        $input['user_id'] = $userId;
+        $category->fill($input)->save();
+        return redirect("/home/category");
+    }
+    
     
 }
 

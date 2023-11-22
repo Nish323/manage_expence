@@ -45,6 +45,8 @@ const Index = (props) => {
             ))}
           </TableBody>
         </Table>
+        
+        <Button><Link href={`/home/category/create`}>Create</Link></Button>
       </div>
 
     </Authenticated>

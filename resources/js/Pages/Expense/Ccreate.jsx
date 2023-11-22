@@ -5,16 +5,16 @@ import { Select, FormControl, InputLabel, Box, MenuItem, Button, Slider } from "
 
 const Edit = (props) => {
   const { categories } = props;
-  const { data, setData, put } = useForm({
-    name: categories.name,
-    weight: categories.weight,
-    description: categories.description,
+  const { data, setData, post } = useForm({
+    name: "",
+    weight: 0,
+    description: "",
     user_id: props.user_id,
   });
 
   const handleSendExpenses = (e) => {
     e.preventDefault();
-    put(`/home/category/${categories.id}`);
+    post(`/home/category`);
   };
 
   return (
@@ -38,7 +38,7 @@ const Edit = (props) => {
             <input
               type="text"
               id="category"
-              value={data.name}
+              placeholder="自己投資"
               onChange={(e) => setData("name", e.target.value)}
               className="mt-1 p-2 w-full border rounded-md"
             />
@@ -60,7 +60,6 @@ const Edit = (props) => {
               min={0}
               max={9.9}
             />
-            {/* Display the value of the Slider */}
             <div className="mt-2">
               <strong>Weight: {data.weight}</strong>
             </div>
@@ -77,7 +76,7 @@ const Edit = (props) => {
             </label>
             <textarea
               id="description"
-              value={data.description}
+              placeholder="自分を成長させるために使った支出"
               onChange={(e) => setData("description", e.target.value)}
               className="mt-1 p-2 w-full border rounded-md"
             ></textarea>
@@ -88,7 +87,7 @@ const Edit = (props) => {
             type="submit"
             className="p-2 bg-purple-300 hover:bg-purple-400 rounded-md text-white"
           >
-            Edit
+            Create
           </Button>
         </form>
       </div>
