@@ -37,33 +37,43 @@ const Index = (props) => {
     return category ? category.name : '';
   };
 
+  const getCategoryColor = (categoryId) => {
+      // カテゴリーIDが1の時を基準にした色相の基準値
+      const baseHue = 200; // 例えば、200度の青を基準に
+  
+      // カテゴリーIDごとに色相を計算
+      const hue = (baseHue + (categoryId - 1) * 30) % 360; // 30度ずつ変化させる例
+  
+      // HSL形式からRGBに変換
+      const rgbColor = `hsl(${hue}, 70%, 50%)`;
+  
+      return rgbColor;
+  };
+  
+  const categoryColors = categories.reduce((colors, category) => {
+      colors[category.id] = getCategoryColor(category.id);
+      return colors;
+  }, {});
+    
   const ExpenseData = {
     labels: useCmonthTotals.map(entry => getCategoryNameById(entry.category_id, categories)),
     datasets: [
       {
         label: '支出',
         data: useCmonthTotals.map(entry => entry.expense_total),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)'
-        ],
+        backgroundColor: useCmonthTotals.map(entry => categoryColors[entry.category_id]),
         borderWidth: 1,
       },
     ],
   };
-
+  
   const WeightData = {
     labels: useCmonthTotals.map(entry => getCategoryNameById(entry.category_id, categories)),
     datasets: [
       {
         label: '支出',
         data: useCmonthTotals.map(entry => entry.weight_total),
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)'
-        ],
+        backgroundColor: useCmonthTotals.map(entry => categoryColors[entry.category_id]),
         borderWidth: 1,
       },
     ],
@@ -82,7 +92,7 @@ const Index = (props) => {
     setSelectedMonth(prevMonth => prevMonth - 1);
   };
 
- return (
+  return (
     <Authenticated auth={props.auth} header={
       <h2 className="font-semibold text-xl text-gray-800 leading-tight">
         Index

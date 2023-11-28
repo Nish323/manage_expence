@@ -8,29 +8,42 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 const Index = (props) => {
-    const { expenses, categories } = props; // categoriesも受け取る
+    const { expenses, categories } = props; 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedExpense, setSelectedExpense] = React.useState(null);
 
-    const expenseEvents = expenses.map((expense) => ({
-        id: expense.id,
-        title: `￥${expense.amount}`,
-        category_id: expense.category_id,
-        description: expense.description,
-        date: expense.expense_at,
-    }));
+    const getCategoryColor = (categoryId) => {
+        // カテゴリーIDが1の時を基準にした色相の基準値
+        const baseHue = 200; // 例えば、200度の青を基準に
+
+        // カテゴリーIDごとに色相を計算
+        const hue = (baseHue + (categoryId - 1) * 30) % 360; // 30度ずつ変化させる例
+
+        // HSL形式からRGBに変換
+        const rgbColor = `hsl(${hue}, 70%, 50%)`;
+
+        return rgbColor;
+    };
+
+    const expenseEvents = expenses.map((expense) => {
+        const eventColor = getCategoryColor(expense.category_id);
+
+        return {
+            id: expense.id,
+            title: `￥${expense.amount}`,
+            category_id: expense.category_id,
+            description: expense.description,
+            date: expense.expense_at,
+            color: eventColor,
+        };
+    });
 
     const handleEventClick = (event) => {
-        // クリックしたイベントのid
         const eventId = parseInt(event.event.id, 10);
-
-        // イベントidと一致するexpensesのデータを取得
         const clickedExpense = expenses.find((expense) => expense.id === eventId);
-
-        // カテゴリーidと一致するcategoriesのデータを取得
         const category = categories.find((category) => category.id === clickedExpense.category_id);
 
-        setSelectedExpense({ ...clickedExpense, category }); // カテゴリー情報もselectedExpenseに含める
+        setSelectedExpense({ ...clickedExpense, category });
         setAnchorEl(event.el);
     };
 
@@ -84,5 +97,3 @@ const Index = (props) => {
 }
 
 export default Index;
-
-
