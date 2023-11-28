@@ -413,6 +413,5 @@ class ExpenseController extends Controller
         return redirect("/home/category");
     }
     
-    
 }
 
