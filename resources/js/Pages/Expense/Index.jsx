@@ -39,10 +39,10 @@ const Index = (props) => {
 
   const getCategoryColor = (categoryId) => {
       // カテゴリーIDが1の時を基準にした色相の基準値
-      const baseHue = 200; // 例えば、200度の青を基準に
+      const baseHue = 200;
   
       // カテゴリーIDごとに色相を計算
-      const hue = (baseHue + (categoryId - 1) * 30) % 360; // 30度ずつ変化させる例
+      const hue = (baseHue + (categoryId - 1) * 50) % 360; 
   
       // HSL形式からRGBに変換
       const rgbColor = `hsl(${hue}, 70%, 50%)`;

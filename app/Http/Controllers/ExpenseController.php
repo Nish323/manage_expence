@@ -325,7 +325,7 @@ class ExpenseController extends Controller
         $category = Category::find($categoryId);
         $weight = $category->weight;
     
-        // カラムに重さを加算
+        // カラムに重さを減算
         $monthTotal->weight_total -= floor($weight * $Amount);
     
         // データベースに保存
