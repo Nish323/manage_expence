@@ -61,7 +61,7 @@ class ExpenseController extends Controller
         // ユーザー入力から月を取得
         $expenseDate = Carbon::parse($request->expense_at);
         $Month = $expenseDate->startOfMonth()->format('m');
-        $Year = $expenseDate->startOfMonth()->format('y');
+        $Year = $expenseDate->startOfMonth()->format('Y');
         $userId = $request->user()->id;
         $categoryId = $request->category_id;
         $Amount = $request->amount;
@@ -222,7 +222,7 @@ class ExpenseController extends Controller
          // ユーザー入力から月を取得
         $expenseDate = Carbon::parse($request->expense_at);
         $Month = $expenseDate->startOfMonth()->format('m');
-        $Year = $expenseDate->startOfMonth()->format('y');
+        $Year = $expenseDate->startOfMonth()->format('Y');
         $categoryId = $request->category_id;
         $userId = $request->user()->id;
         $Amount = $request->amount;
@@ -318,7 +318,7 @@ class ExpenseController extends Controller
             'month' => $Month,
         ]);
     
-        // カラムに金額を加算
+        // カラムに金額を減算
         $monthTotal->expense_total -= $Amount;
     
         //カテゴリーテーブルから対応したidのweightを取得
