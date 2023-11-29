@@ -1,7 +1,11 @@
 import * as React from "react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Link, router } from '@inertiajs/react';
-import { Button, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Link, router } from "@inertiajs/react";
+import { Button, Table, TableHead, TableBody, TableRow, TableCell } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
+import { IconButton } from "@mui/material";
 
 const Index = (props) => {
   const { categories } = props;
@@ -13,24 +17,22 @@ const Index = (props) => {
     });
   };
 
- return (
-    <Authenticated auth={props.auth} header={
-      <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-        Index
-      </h2>
-    }>
-
+  return (
+    <Authenticated
+      auth={props.auth}
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Index</h2>}
+    >
       <div className="p-12">
-        <h1>Expense</h1>
+        <h1 className="text-3xl font-bold mb-6">Expense Categories</h1>
 
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Category Name</TableCell>
-              <TableCell>Weight</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Edit</TableCell>
-              <TableCell>Delete</TableCell>
+              <TableCell className="font-semibold">Category Name</TableCell>
+              <TableCell className="font-semibold">Weight</TableCell>
+              <TableCell className="font-semibold">Description</TableCell>
+              <TableCell className="font-semibold">Edit</TableCell>
+              <TableCell className="font-semibold">Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -39,18 +41,34 @@ const Index = (props) => {
                 <TableCell>{category.name}</TableCell>
                 <TableCell>{category.weight}</TableCell>
                 <TableCell>{category.description}</TableCell>
-                <TableCell><Button><Link href={`/home/category/${category.id}`}>Edit</Link></Button></TableCell>
-                <TableCell><Button variant="contained" onClick={() => handleDeleteCategory(category.id)}>Delete</Button></TableCell>
+                <TableCell>
+                  <IconButton size="small">
+                    <Link href={`/home/category/${category.id}`}>
+                      <EditIcon />
+                    </Link>
+                  </IconButton>
+                </TableCell>
+                <TableCell>
+                  <IconButton size="small" onClick={() => handleDeleteCategory(category.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        
-        <Button><Link href={`/home/category/create`}>Create</Link></Button>
-      </div>
 
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          className="mt-6"
+        >
+          <Link href={`/home/category/create`}>Create</Link>
+        </Button>
+      </div>
     </Authenticated>
   );
-}
+};
 
 export default Index;

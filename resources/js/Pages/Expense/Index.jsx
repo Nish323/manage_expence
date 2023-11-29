@@ -42,7 +42,7 @@ const Index = (props) => {
       const baseHue = 200;
   
       // カテゴリーIDごとに色相を計算
-      const hue = (baseHue + (categoryId - 1) * 50) % 360; 
+      const hue = (baseHue + (categoryId - 1) * 30) % 360; 
   
       // HSL形式からRGBに変換
       const rgbColor = `hsl(${hue}, 70%, 50%)`;

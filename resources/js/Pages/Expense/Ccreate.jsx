@@ -1,7 +1,15 @@
 import * as React from "react";
 import { Link, useForm } from "@inertiajs/react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Select, FormControl, InputLabel, Box, MenuItem, Button, Slider } from "@mui/material";
+import {
+  Select,
+  FormControl,
+  InputLabel,
+  Box,
+  MenuItem,
+  Button,
+  Slider,
+} from "@mui/material";
 
 const Edit = (props) => {
   const { categories } = props;
@@ -20,19 +28,12 @@ const Edit = (props) => {
   return (
     <Authenticated
       auth={props.auth}
-      header={
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-          Edit
-        </h2>
-      }
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit</h2>}
     >
       <div className="p-8">
-        <form onSubmit={handleSendExpenses} className="max-w-md mx-auto">
-          <div className="mb-4">
-            <label
-              htmlFor="Catgory Name"
-              className="block text-sm font-medium text-gray-600"
-            >
+        <form onSubmit={handleSendExpenses} className="max-w-md mx-auto space-y-4">
+          <div>
+            <label htmlFor="category" className="block text-sm font-medium text-gray-600">
               Category name
             </label>
             <input
@@ -45,11 +46,8 @@ const Edit = (props) => {
             <span className="text-red-600">{props.errors.name}</span>
           </div>
 
-          <div className="mb-4">
-            <label
-              htmlFor="Weight"
-              className="block text-sm font-medium text-gray-600"
-            >
+          <div>
+            <label htmlFor="weight" className="block text-sm font-medium text-gray-600">
               Weight
             </label>
             <Slider
@@ -66,12 +64,8 @@ const Edit = (props) => {
             <span className="text-red-600">{props.errors.weight}</span>
           </div>
 
-          
-          <div className="mb-4">
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-600"
-            >
+          <div>
+            <label htmlFor="description" className="block text-sm font-medium text-gray-600">
               Description
             </label>
             <textarea

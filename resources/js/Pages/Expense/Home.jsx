@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 
 const Index = (props) => {
     const { expenses, categories } = props; 
-    const [anchorEl, setAnchorEl] = React.useState(null);i
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const [selectedExpense, setSelectedExpense] = React.useState(null);
 
     const getCategoryColor = (categoryId) => {
@@ -17,8 +17,8 @@ const Index = (props) => {
         const baseHue = 200; // 例えば、200度の青を基準に
 
         // カテゴリーIDごとに色相を計算
-        const hue = (baseHue + (categoryId - 1) * 50) % 360; // 30度ずつ変化させる例
-
+        const hue = (baseHue + (categoryId - 1) * 30) % 360; 
+        
         // HSL形式からRGBに変換
         const rgbColor = `hsl(${hue}, 70%, 50%)`;
 
