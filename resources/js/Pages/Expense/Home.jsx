@@ -14,8 +14,7 @@ const Index = (props) => {
 
     const getCategoryColor = (categoryId) => {
         // カテゴリーIDが1の時を基準にした色相の基準値
-        const baseHue = 200; // 例えば、200度の青を基準に
-
+        const baseHue = 200;
         // カテゴリーIDごとに色相を計算
         const hue = (baseHue + (categoryId - 1) * 30) % 360; 
         
