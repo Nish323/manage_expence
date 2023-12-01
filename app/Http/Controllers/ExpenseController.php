@@ -23,6 +23,9 @@ class ExpenseController extends Controller
         
         $expenses = expense::where('user_id', $userId)->get();
 
+    
+        // MonthTotalモデルから月ごとの合計値を取得
+        $CmonthTotals = category_month_total::where('user_id', $userId)->get();
         $categories = category::where('user_id', $userId)->get();
         
         return Inertia::render("Expense/Index", [
