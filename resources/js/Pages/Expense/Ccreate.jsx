@@ -28,7 +28,7 @@ const Edit = (props) => {
   return (
     <Authenticated
       auth={props.auth}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit</h2>}
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Category Create</h2>}
     >
       <div className="p-8">
         <form onSubmit={handleSendExpenses} className="max-w-md mx-auto space-y-4">

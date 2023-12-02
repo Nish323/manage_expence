@@ -51,48 +51,49 @@ const Index = (props) => {
         setSelectedExpense(null);
     };
 
-    return (
-        <Authenticated auth={props.auth} header={
-            <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                ホーム
-            </h2>
-        }>
-            <div className="p-12">
-                <h1>ホーム</h1>
+     return (
+    <Authenticated auth={props.auth} header={
+      <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+        Home
+      </h2>
+    }>
+      <div className="p-12">
 
-                {/* FullCalendar コンポーネント */}
-                <FullCalendar
-                    plugins={[dayGridPlugin]}
-                    initialView="dayGridMonth"
-                    events={expenseEvents}
-                    eventClick={handleEventClick}
-                />
+        {/* FullCalendar コンポーネント */}
+        <FullCalendar
+          plugins={[dayGridPlugin]}
+          initialView="dayGridMonth"
+          events={expenseEvents}
+          eventClick={handleEventClick}
+          height="60vh"  // Adjust the height as needed
+          aspectRatio={2}  // Adjust the aspectRatio as needed
+        />
 
-                {/* Popover */}
-                <Popover
-                    open={Boolean(anchorEl)}
-                    anchorEl={anchorEl}
-                    onClose={handleClosePopover}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'center',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'center',
-                    }}
-                >
-                    {selectedExpense && (
-                        <div>
-                            <Typography sx={{ p: 2 }}>金額: {`￥${selectedExpense.amount}`}</Typography>
-                            <Typography sx={{ p: 2 }}>カテゴリー: {selectedExpense.category.name}</Typography>
-                            <Typography sx={{ p: 2 }}>説明: {selectedExpense.description}</Typography>
-                        </div>
-                    )}
-                </Popover>
+        {/* Popover */}
+        <Popover
+          open={Boolean(anchorEl)}
+          anchorEl={anchorEl}
+          onClose={handleClosePopover}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          {selectedExpense && (
+            <div>
+              <Typography sx={{ p: 2 }}>金額: {`￥${selectedExpense.amount}`}</Typography>
+              <Typography sx={{ p: 2 }}>カテゴリー: {selectedExpense.category.name}</Typography>
+              <Typography sx={{ p: 2 }}>説明: {selectedExpense.description}</Typography>
             </div>
-        </Authenticated>
-    );
+          )}
+        </Popover>
+      </div>
+    </Authenticated>
+  );
 }
 
 export default Index;
