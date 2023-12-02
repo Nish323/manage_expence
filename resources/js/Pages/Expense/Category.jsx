@@ -20,10 +20,9 @@ const Index = (props) => {
   return (
     <Authenticated
       auth={props.auth}
-      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Index</h2>}
+      header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Expense Categories</h2>}
     >
       <div className="p-12">
-        <h1 className="text-3xl font-bold mb-6">Expense Categories</h1>
 
         <Table>
           <TableHead>

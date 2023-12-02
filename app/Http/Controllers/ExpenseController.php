@@ -134,7 +134,7 @@ class ExpenseController extends Controller
         
         $expense->save();
     
-        return redirect("/home/expenses");
+        return redirect("/home/create");
     }
 
     
@@ -413,5 +413,22 @@ class ExpenseController extends Controller
         return redirect("/home/category");
     }
     
+    public function transition()
+    {
+        $userId = Auth::id();
+        
+        $expenses = expense::where('user_id', $userId)->get();
+
+    
+        // MonthTotalモデルから月ごとの合計値を取得
+        $CmonthTotals = category_month_total::where('user_id', $userId)->get();
+        $categories = category::where('user_id', $userId)->get();
+        
+        return Inertia::render("Expense/Transition",[
+            "expenses" => $expenses,
+            "CmonthTotals" => $CmonthTotals,
+            "categories" => $categories
+        ]);
+    }
 }
 

@@ -4,6 +4,10 @@ import { Link, router } from '@inertiajs/react';
 import { Button, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement } from "chart.js/auto";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
+import { IconButton } from "@mui/material";
 
 Chart.register(ArcElement);
 
@@ -95,12 +99,11 @@ const Index = (props) => {
   return (
     <Authenticated auth={props.auth} header={
       <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-        Index
+        Expense
       </h2>
     }>
 
       <div className="p-12">
-        <h1>Expense</h1>
 
         <div>
           <Button onClick={decrementMonth}>{'<'}</Button>
@@ -134,8 +137,18 @@ const Index = (props) => {
                 <TableCell>{getCategoryNameById(expense.category_id, categories)}</TableCell>
                 <TableCell>{expense.description}</TableCell>
                 <TableCell>{expense.amount}</TableCell>
-                <TableCell><Button><Link href={`/home/expenses/${expense.id}`}>Edit</Link></Button></TableCell>
-                <TableCell><Button variant="contained" onClick={() => handleDeleteExpense(expense.id)}>Delete</Button></TableCell>
+                <TableCell>
+                  <IconButton size="small">
+                    <Link href={`/home/expenses/${expense.id}`}>
+                      <EditIcon />
+                    </Link>
+                  </IconButton>
+                </TableCell>
+                <TableCell>
+                  <IconButton size="small" onClick={() => handleDeleteExpense(expense.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

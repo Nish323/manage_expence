@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get("/home", [ExpenseController::class, "home"]);
     Route::get("/home/expenses", [ExpenseController::class, "index"]);
     Route::get("/home/create", [ExpenseController::class, "create"]);
+    Route::get("home/transition", [ExpenseController::class, "transition"]);
     Route::post("/home/expenses", [ExpenseController::class, "store"]);
     Route::get('/home/expenses/{expense}', [ExpenseController::class, "edit"]);
     Route::put('/home/expenses/{expense}', [ExpenseController::class, "update"]);
