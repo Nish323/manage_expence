@@ -47,8 +47,8 @@ const Graph = (props) => {
 
     console.log(CmonthTotals);
     console.log(selectedYear);
-     const filteredData = CmonthTotals.filter(
-      (item) => true
+    const filteredData = CmonthTotals.filter(
+      (item) => selectedYear === null || item.year === selectedYear
     );
     console.log(filteredData);
 
