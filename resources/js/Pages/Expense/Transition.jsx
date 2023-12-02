@@ -45,10 +45,12 @@ const Graph = (props) => {
   console.log("CmonthTotals is not a non-empty array");
 }
 
-  const filteredData = CmonthTotals.filter(
-    (item) => new Date(item.year).getFullYear() === selectedYear
-  );
-  console.log(filteredData);
+    console.log(CmonthTotals);
+    console.log(selectedYear);
+    const filteredData = CmonthTotals.filter(
+      (item) => !selectedYear || new Date(item.year).getFullYear() === selectedYear
+    );
+    console.log(filteredData);
 
   const labels = Array.from(
     new Set(
