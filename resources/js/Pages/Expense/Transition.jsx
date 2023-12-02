@@ -69,6 +69,10 @@ const Graph = (props) => {
   };
 
   const availableYears = Array.from(new Set(filteredData.map((item) => new Date(item.year).getFullYear())));
+  
+  console.log('selectedYear:', selectedYear);
+console.log('CmonthTotals:', CmonthTotals);
+console.log('filteredData:', filteredData);
 
   return (
     <Authenticated auth={props.auth} header={
