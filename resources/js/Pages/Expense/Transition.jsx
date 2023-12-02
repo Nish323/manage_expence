@@ -38,7 +38,12 @@ const Graph = (props) => {
   
   console.log(CmonthTotals, selectedYear);
   console.log(typeof selectedYear);
-  console.log(typeof CmonthTotals.year);
+  if (Array.isArray(CmonthTotals) && CmonthTotals.length > 0) {
+  // 配列の最初の要素のyearプロパティの型を確認
+  console.log(typeof CmonthTotals[0].year);
+} else {
+  console.log("CmonthTotals is not a non-empty array");
+}
 
   const filteredData = CmonthTotals.filter(
     (item) => new Date(item.year).getFullYear() === selectedYear
