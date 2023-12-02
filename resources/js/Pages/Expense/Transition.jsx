@@ -36,21 +36,9 @@ const Graph = (props) => {
     groupedData[categoryId].push(item);
   });
   
-  console.log(CmonthTotals, selectedYear);
-  console.log(typeof selectedYear);
-  if (Array.isArray(CmonthTotals) && CmonthTotals.length > 0) {
-  // 配列の最初の要素のyearプロパティの型を確認
-  console.log(typeof CmonthTotals[0].year);
-} else {
-  console.log("CmonthTotals is not a non-empty array");
-}
-
-    console.log(CmonthTotals);
-    console.log(selectedYear);
     const filteredData = CmonthTotals.filter(
-      (item) => selectedYear === null || item.year === selectedYear
+      (item) => !selectedYear || item.year === selectedYear
     );
-    console.log(filteredData);
 
   const labels = Array.from(
     new Set(
@@ -64,7 +52,7 @@ const Graph = (props) => {
     const categoryId = category.id;
     const dataValues = labels.map((month) => {
       const selectedItem = groupedData[categoryId]?.find(
-        (item) => item.month === month && (!selectedYear || new Date(item.year).getFullYear() === selectedYear)
+        (item) => item.month === month && (!selectedYear || item.year === selectedYear)
       );
       return selectedItem?.expense_total || 0;
     });
@@ -80,8 +68,6 @@ const Graph = (props) => {
     labels: labels,
     datasets: datasets,
   };
-
-  const availableYears = Array.from(new Set(filteredData.map((item) => new Date(item.year).getFullYear())));
 
   return (
     <Authenticated auth={props.auth} header={
