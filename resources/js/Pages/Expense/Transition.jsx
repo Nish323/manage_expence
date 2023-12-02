@@ -15,6 +15,7 @@ const getCategoryColor = (categoryId) => {
 
 const Graph = (props) => {
   const { CmonthTotals, categories } = props;
+  
 
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
@@ -34,10 +35,14 @@ const Graph = (props) => {
     }
     groupedData[categoryId].push(item);
   });
+  
+  console.log(CmonthTotals, selectedYear);
+  console.log(!selectedYear);
 
   const filteredData = CmonthTotals.filter(
     (item) => !selectedYear || new Date(item.year).getFullYear() === selectedYear
   );
+  console.log(filteredData);
 
   const labels = Array.from(
     new Set(
@@ -69,10 +74,6 @@ const Graph = (props) => {
   };
 
   const availableYears = Array.from(new Set(filteredData.map((item) => new Date(item.year).getFullYear())));
-  
-  console.log('selectedYear:', selectedYear);
-console.log('CmonthTotals:', CmonthTotals);
-console.log('filteredData:', filteredData);
 
   return (
     <Authenticated auth={props.auth} header={
